@@ -1,9 +1,9 @@
 package com.sidlight.xobot.core.statemachine;
 
-import com.sidlight.xobot.core.UserIdentifier;
 import com.sidlight.xobot.core.Message;
+import com.sidlight.xobot.core.UserIdentifier;
+import com.sidlight.xobot.core.statemachine.annotations.ActionClass;
 import com.sidlight.xobot.core.statemachine.annotations.EventAction;
-import com.sidlight.xobot.core.statemachine.annotations.EventClass;
 import com.sidlight.xobot.core.statemachine.annotations.StateAction;
 import com.sidlight.xobot.core.statemachine.enums.BasicState;
 import org.atteo.classindex.ClassIndex;
@@ -24,9 +24,24 @@ public class StateMachine {
 
     private static final Map<UserIdentifier, String> states = new ConcurrentHashMap<>();
 
+    private static final Map<UserIdentifier, Object> storage = new ConcurrentHashMap<>();
+
+    public static Object getObjectFromStage(UserIdentifier userIdentifier) throws StateMachineException {
+        if (storage.containsKey(userIdentifier) && storage.get(userIdentifier) != null) {
+            Object obj = getObjectFromStage(userIdentifier);
+            storage.remove(obj);
+            return obj;
+        }
+        throw new StateMachineException("Object from userIdentifier not found");
+    }
+
+    public static void setObjectFromStage(UserIdentifier userIdentifier, Object object) throws StateMachineException {
+        storage.put(userIdentifier, object);
+    }
+
     public static void initStateMachine() throws StateMachineException {
         List<StateTreeItem> items = new ArrayList<>();
-        for (Class<?> klass : ClassIndex.getAnnotated(EventClass.class)) {
+        for (Class<?> klass : ClassIndex.getAnnotated(ActionClass.class)) {
             Arrays.stream(klass.getDeclaredMethods())
                     .forEach(method ->
                             {
@@ -49,11 +64,11 @@ public class StateMachine {
      * @throws StateMachineException
      */
     public static boolean checkAndAcceptStateAction(Message message) throws StateMachineException {
-        if (!states.containsKey(message.getChatIdentifier())
-                || states.get(message.getChatIdentifier()).equals(BasicState.WAITING_STATE)) {
+        if (!states.containsKey(message.getUserIdentifier())
+                || states.get(message.getUserIdentifier()).equals(BasicState.WAITING_STATE)) {
             return false;
         }
-        acceptStateAction(message, states.get(message.getChatIdentifier()));
+        acceptStateAction(message, states.get(message.getUserIdentifier()));
         return true;
     }
 
@@ -64,7 +79,7 @@ public class StateMachine {
 
     private static void acceptStateAction(Message message, String state) {
         List<Method> actions = new ArrayList<>();
-        for (Class<?> clazz : ClassIndex.getAnnotated(EventClass.class)) {
+        for (Class<?> clazz : ClassIndex.getAnnotated(ActionClass.class)) {
             actions.addAll(Arrays.stream(clazz.getDeclaredMethods())
                     .filter(method -> {
                         return (method.getAnnotation(StateAction.class) != null
@@ -86,7 +101,7 @@ public class StateMachine {
 
     private static void acceptEvent(String eventName, Message message) throws StateMachineException {
         Optional<Method> event = Optional.empty();
-        for (Class<?> klass : ClassIndex.getAnnotated(EventClass.class)) {
+        for (Class<?> klass : ClassIndex.getAnnotated(ActionClass.class)) {
             event = Arrays.stream(klass.getDeclaredMethods())
                     .filter(method ->
                             {
@@ -103,11 +118,11 @@ public class StateMachine {
         try {
             event
                     .get()
-                    .invoke(null, message.getChatIdentifier().messenger().getMessageExecutor(null),
+                    .invoke(null, message.getUserIdentifier().messenger().getMessageExecutor(null),
                             message);
             String targetEvent = event.get().getAnnotation(EventAction.class).targetState();
-            states.put(message.getChatIdentifier(), targetEvent);
-            logger.debug("Set state \"" + targetEvent + "\" from " + message.getChatIdentifier().toString());
+            states.put(message.getUserIdentifier(), targetEvent);
+            logger.debug("Set state \"" + targetEvent + "\" from " + message.getUserIdentifier().toString());
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new StateMachineException("Error when changing State Machine state", e);
         }

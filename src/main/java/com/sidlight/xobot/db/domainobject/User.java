@@ -43,14 +43,16 @@ public class User {
     @Column
     private StateRegister stateRegister;
 
-    public User() {
-
-    }
 
     public User(Messenger messenger, String userName, String chatId) {
         this.messenger = messenger;
         this.userName = userName;
         this.chatId = chatId;
+        stateRegister = StateRegister.NON;
+        role = Role.USER;
+    }
+
+    public User() {
         stateRegister = StateRegister.NON;
         role = Role.USER;
     }

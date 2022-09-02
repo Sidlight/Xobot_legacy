@@ -19,8 +19,6 @@ public class ModeratorSettings {
     @OneToOne
     private User user;
 
-
-
     public ModeratorSettings(){}
 
     public ModeratorSettings(User user){

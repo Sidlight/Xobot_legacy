@@ -9,24 +9,26 @@ import com.sidlight.xobot.db.repos.UserRepo;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
-@EnableJpaRepositories
+@Service
+@EnableJpaRepositories(basePackages = "com.sidlight.xobot.db.repos")
 public class UserManager implements InitializingBean {
 
-    private UserRepo repo;
+    private static UserManager instance;
+
+    private UserRepo userRepo;
 
     @Autowired
-    public void setUserRepo(UserRepo repo) {
-        this.repo = repo;
+    public void setUserRepo(UserRepo userRepo) {
+        this.userRepo = userRepo;
     }
-
-    private static UserManager instance;
 
     public static UserManager get() {
         return instance;
     }
+
+    public UserManager(){}
 
     @Override
     public void afterPropertiesSet() {
@@ -34,7 +36,12 @@ public class UserManager implements InitializingBean {
     }
 
     public User getUserFromUserIdentifier(UserIdentifier userIdentifier) throws BotDataException {
-        User user = repo.findFirstByChatIdAndMessenger(userIdentifier.chatId(), userIdentifier.messenger());
+        User user;
+        try {
+            user = userRepo.findFirstByChatIdAndMessenger(userIdentifier.chatId(), userIdentifier.messenger());
+        } catch (Exception e) {
+            throw new BotDataException("User not Found");
+        }
         if (user == null) {
             throw new BotDataException("User not Found");
         }
@@ -44,12 +51,12 @@ public class UserManager implements InitializingBean {
     public void setRole(Role role, UserIdentifier userIdentifier) throws BotDataException {
         User user = getUserFromUserIdentifier(userIdentifier);
         user.setRole(role);
-        repo.save(user);
+        userRepo.save(user);
     }
 
     public void setStateRegister(StateRegister stateRegister, UserIdentifier userIdentifier) throws BotDataException {
         User user = getUserFromUserIdentifier(userIdentifier);
         user.setStateRegister(stateRegister);
-        repo.save(user);
+        userRepo.save(user);
     }
 }

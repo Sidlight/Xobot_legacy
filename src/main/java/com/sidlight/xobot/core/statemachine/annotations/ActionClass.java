@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @IndexAnnotated
-public @interface EventClass {
+public @interface ActionClass {
     String description();
 }

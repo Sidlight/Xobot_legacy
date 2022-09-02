@@ -11,4 +11,8 @@ public class StateMachineException extends Exception {
         super(e != null ? e : new Exception(stateMachineException));
         this.stateMachineException = stateMachineException;
     }
+
+    public StateMachineException(String stateMachineException) {
+        this.stateMachineException = stateMachineException;
+    }
 }

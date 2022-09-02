@@ -16,6 +16,7 @@ public @interface EventAction {
     String targetState() default BasicState.WAITING_STATE;
 
     String sourceState() default BasicState.WAITING_STATE;
+
     String event();
 
     long returnToOriginalState();

@@ -28,7 +28,8 @@ public class UserManager implements InitializingBean {
         return instance;
     }
 
-    public UserManager(){}
+    public UserManager() {
+    }
 
     @Override
     public void afterPropertiesSet() {
@@ -57,6 +58,21 @@ public class UserManager implements InitializingBean {
     public void setStateRegister(StateRegister stateRegister, UserIdentifier userIdentifier) throws BotDataException {
         User user = getUserFromUserIdentifier(userIdentifier);
         user.setStateRegister(stateRegister);
+        userRepo.save(user);
+    }
+
+    public void register(UserIdentifier userIdentifier, String userName, Role role, String fio) {
+        User user = new User();
+        user.setFio(fio);
+        user.setChatId(userIdentifier.chatId());
+        user.setUserName(userName);
+        user.setMessenger(userIdentifier.messenger());
+        user.setRole(role);
+        if (role == Role.DEVELOPER || role == Role.ADMIN) {
+            user.setStateRegister(StateRegister.CONFIRMED);
+        } else {
+            user.setStateRegister(StateRegister.PENDING_CONFIRMATION);
+        }
         userRepo.save(user);
     }
 }

@@ -30,8 +30,10 @@ public class TelegramBotController extends TelegramLongPollingBot implements Bot
     private String token;
 
     @Value("${tg.bot.admin}")
-    private String adminName;
+    private String adminUserName;
 
+    @Value("${tg.bot.admin}")
+    private String developUserName;
 
     public TelegramBotController() {
 
@@ -51,6 +53,16 @@ public class TelegramBotController extends TelegramLongPollingBot implements Bot
     public void init() throws Exception {
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
         telegramBotsApi.registerBot(this);
+    }
+
+    @Override
+    public String getDevelopUserName() {
+        return developUserName;
+    }
+
+    @Override
+    public String getAdminUserName() {
+        return adminUserName;
     }
 
     @Override

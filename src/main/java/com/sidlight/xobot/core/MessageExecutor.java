@@ -1,10 +1,14 @@
 package com.sidlight.xobot.core;
 
+import com.sidlight.xobot.messages.controllers.BotController;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
 public interface MessageExecutor {
+
+    BotController getController();
 
     Messenger getMessenger();
 

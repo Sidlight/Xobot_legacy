@@ -1,6 +1,7 @@
 package com.sidlight.xobot.core.statemachine;
 
 import com.sidlight.xobot.core.Message;
+import com.sidlight.xobot.core.UserActionException;
 import com.sidlight.xobot.core.UserIdentifier;
 import com.sidlight.xobot.core.statemachine.annotations.ActionClass;
 import com.sidlight.xobot.core.statemachine.annotations.EventAction;
@@ -63,7 +64,7 @@ public class StateMachine {
      * @return флаг нахождения в каком либо состоянии кроме ожидания
      * @throws StateMachineException
      */
-    public static boolean checkAndAcceptStateAction(Message message) throws StateMachineException {
+    public static boolean checkAndAcceptStateAction(Message message) throws StateMachineException, UserActionException {
         if (!states.containsKey(message.getUserIdentifier())
                 || states.get(message.getUserIdentifier()).equals(BasicState.WAITING_STATE)) {
             return false;
@@ -118,59 +119,12 @@ public class StateMachine {
         try {
             event
                     .get()
-                    .invoke(null, message.getUserIdentifier().messenger().getMessageExecutor(null),
-                            message);
+                    .invoke(null, message);
             String targetEvent = event.get().getAnnotation(EventAction.class).targetState();
             states.put(message.getUserIdentifier(), targetEvent);
             logger.debug("Set state \"" + targetEvent + "\" from " + message.getUserIdentifier().toString());
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new StateMachineException("Error when changing State Machine state", e);
         }
-    }
-
-
-    /*
-
-    public static void initStateMachine() throws StateMachineException {
-        Set<String> requiredEvent = new HashSet<>();
-        try {
-            for (Class<?> clazz : ClassIndex.getAnnotated(Events.class)) {
-                Arrays.stream(clazz.getDeclaredFields())
-                        .filter(field -> field.getAnnotation(RequiredEvent.class) != null)
-                        .forEach(field -> {
-                            try {
-                                requiredEvent.add((String) field.get(null));
-                            } catch (IllegalAccessException e) {
-                                throw new RuntimeException(e);
-                            }
-                        });
-            }
-        } catch (RuntimeException e) {
-            throw new StateMachineException(e, "There are duplicate required events");
-        }
-        List<Method> allAction = null;
-        for (Class<?> clazz : ClassIndex.getAnnotated(EventClass.class)) {
-            allAction = Arrays.stream(clazz.getDeclaredMethods())
-                    .filter(method -> method.getAnnotation(EventAction.class) != null)
-                    .collect(Collectors.toList());
-        }
-        StateTreeItem waitingNode = new StateTreeItem(BasicState.WAITING_STATE);
-        for (Method method : allAction) {
-            waitingNode.addNode(method.getAnnotation(EventAction.class).);
-        }
-        if (true) throw new StateMachineException("Error while initializing the State Machine");
-    }
-*/
-
-
-    @Deprecated
-    public String getState(UserIdentifier chatIdentifier) {
-        if (states.get(chatIdentifier) == null) return BasicState.WAITING_STATE;
-        return states.get(chatIdentifier);
-    }
-
-    @Deprecated
-    public static void setState(UserIdentifier chatIdentifier, String state) {
-        StateMachine.states.put(chatIdentifier, state);
     }
 }

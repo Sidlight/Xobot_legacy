@@ -21,15 +21,20 @@ import java.util.List;
 import java.util.Map;
 
 @EnableAutoConfiguration
-public class TelegramMessageExecutor implements MessageExecutor, BotController {
+public class TelegramMessageExecutor implements MessageExecutor {
 
-    private final TelegramLongPollingBot sender;
+    private final TelegramBotController sender;
     private final String chatId;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public TelegramMessageExecutor(TelegramLongPollingBot sender, String chatId) {
+    public TelegramMessageExecutor(TelegramBotController sender, String chatId) {
         this.sender = sender;
         this.chatId = chatId;
+    }
+
+    @Override
+    public BotController getController(){
+        return sender;
     }
 
 
@@ -184,10 +189,5 @@ public class TelegramMessageExecutor implements MessageExecutor, BotController {
         } catch (TelegramApiException e) {
             logger.error(e.getMessage());
         }
-    }
-
-    @Override
-    public void init() throws Exception {
-
     }
 }

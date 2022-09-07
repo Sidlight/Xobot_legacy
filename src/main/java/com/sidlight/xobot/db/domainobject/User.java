@@ -38,11 +38,15 @@ public class User {
     @Column
     private String userName;
 
+    @Setter
+    @Getter
+    @Column
+    private String fio;
+
     @Getter
     @Setter
     @Column
     private StateRegister stateRegister;
-
 
     public User(Messenger messenger, String userName, String chatId) {
         this.messenger = messenger;

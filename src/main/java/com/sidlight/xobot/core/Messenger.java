@@ -9,10 +9,9 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
 public enum Messenger {
     TELEGRAM(chatId -> new TelegramMessageExecutor(
-            (TelegramLongPollingBot) getBotController(TelegramBotController.class), chatId),
+            (TelegramBotController) getBotController(TelegramBotController.class), chatId),
             TelegramBotController.class),
     ALL(chatId -> null, null);
-
 
     private Class<?> botControllerClazz;
 

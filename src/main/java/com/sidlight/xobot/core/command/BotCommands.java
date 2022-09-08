@@ -1,18 +1,15 @@
-package com.sidlight.xobot.core;
+package com.sidlight.xobot.core.command;
+
+import org.atteo.classindex.IndexAnnotated;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Target( ElementType.METHOD)
-public @interface Keyboard {
-    String tag();
+@IndexAnnotated
+public @interface BotCommands {
     String description() default "";
-    String command();
-    int row() default -1;
-    int column() default -1;
-
-
 }

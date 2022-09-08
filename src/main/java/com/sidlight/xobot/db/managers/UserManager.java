@@ -1,8 +1,9 @@
 package com.sidlight.xobot.db.managers;
 
-import com.sidlight.xobot.core.Role;
-import com.sidlight.xobot.core.StateRegister;
-import com.sidlight.xobot.core.UserIdentifier;
+import com.sidlight.xobot.core.access.Role;
+import com.sidlight.xobot.core.access.StateRegister;
+import com.sidlight.xobot.core.message.Messenger;
+import com.sidlight.xobot.core.message.UserIdentifier;
 import com.sidlight.xobot.db.BotDataException;
 import com.sidlight.xobot.db.domainobject.User;
 import com.sidlight.xobot.db.repos.UserRepo;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @EnableJpaRepositories(basePackages = "com.sidlight.xobot.db.repos")
@@ -29,6 +32,7 @@ public class UserManager implements InitializingBean {
     }
 
     public UserManager() {
+
     }
 
     @Override
@@ -59,6 +63,37 @@ public class UserManager implements InitializingBean {
         User user = getUserFromUserIdentifier(userIdentifier);
         user.setStateRegister(stateRegister);
         userRepo.save(user);
+    }
+
+    public List<User> getAllUserFrom(Role role, Messenger messenger, StateRegister register) {
+        return userRepo.findAllByRoleAndStateRegisterAndMessenger(role, register, messenger);
+    }
+
+    public List<User> getAllUserFrom(Role role, Messenger messenger) {
+        return userRepo.findAllByRoleAndMessenger(role, messenger);
+    }
+
+    public List<User> getAllUserFrom(Role role, StateRegister register) {
+        return userRepo.findAllByRoleAndStateRegister(role, register);
+    }
+
+
+    public List<User> getAllUserFrom(Role role) {
+        return userRepo.findAllByRole(role);
+
+    }
+
+    public List<User> getAllUserFrom(Messenger messenger, StateRegister register) {
+        return userRepo.findAllByStateRegisterAndMessenger(register, messenger);
+
+    }
+
+    public List<User> getAllUserFrom(StateRegister register) {
+        return userRepo.findAllByStateRegister(register);
+    }
+
+    public List<User> getAllUserFrom(Messenger messenger) {
+        return userRepo.findAllByMessenger(messenger);
     }
 
     public void register(UserIdentifier userIdentifier, String userName, Role role, String fio) {

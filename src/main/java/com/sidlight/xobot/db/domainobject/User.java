@@ -1,9 +1,9 @@
 package com.sidlight.xobot.db.domainobject;
 
-import com.sidlight.xobot.core.Messenger;
-import com.sidlight.xobot.core.Role;
-import com.sidlight.xobot.core.StateRegister;
-import com.sidlight.xobot.core.UserIdentifier;
+import com.sidlight.xobot.core.access.Role;
+import com.sidlight.xobot.core.access.StateRegister;
+import com.sidlight.xobot.core.message.Messenger;
+import com.sidlight.xobot.core.message.UserIdentifier;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -65,6 +65,10 @@ public class User {
         return new UserIdentifier(chatId, messenger);
     }
 
+    @Override
+    public String toString() {
+        return id + ". " + userName + ". " + fio + ". " + messenger.toString();
+    }
 
 }
 

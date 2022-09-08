@@ -1,9 +1,10 @@
 package com.sidlight.xobot.messages.controllers.telegram;
 
 import com.sidlight.xobot.core.Core;
-import com.sidlight.xobot.core.Message;
-import com.sidlight.xobot.core.Messenger;
-import com.sidlight.xobot.core.UserIdentifier;
+import com.sidlight.xobot.core.command.KeyboardBuilder;
+import com.sidlight.xobot.core.message.Message;
+import com.sidlight.xobot.core.message.Messenger;
+import com.sidlight.xobot.core.message.UserIdentifier;
 import com.sidlight.xobot.messages.controllers.BotController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @EnableAutoConfiguration
@@ -28,6 +30,8 @@ public class TelegramBotController extends TelegramLongPollingBot implements Bot
     private String botUsername;
     @Value("${tg.bot.token}")
     private String token;
+
+    private Map<String, String> commandMap;
 
     @Value("${tg.bot.admin}")
     private String adminUserName;
@@ -53,6 +57,7 @@ public class TelegramBotController extends TelegramLongPollingBot implements Bot
     public void init() throws Exception {
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
         telegramBotsApi.registerBot(this);
+        commandMap = KeyboardBuilder.getCommandMap();
     }
 
     @Override
@@ -72,7 +77,7 @@ public class TelegramBotController extends TelegramLongPollingBot implements Bot
         String chatId;
         if (update.getMessage() == null) {
             if (update.getCallbackQuery() != null) {
-                message.setText(callBackCommand(update.getCallbackQuery().getData()));
+                message.setText(update.getCallbackQuery().getData());
                 userName = update.getCallbackQuery().getMessage().getChat().getUserName();
                 if (userName == null) {
                     userName = update.getCallbackQuery().getMessage().getChat().getId().toString();

@@ -1,4 +1,4 @@
-package com.sidlight.xobot.core;
+package com.sidlight.xobot.core.command;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

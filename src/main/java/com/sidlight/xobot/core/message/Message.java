@@ -1,4 +1,4 @@
-package com.sidlight.xobot.core;
+package com.sidlight.xobot.core.message;
 
 import lombok.Getter;
 import lombok.Setter;

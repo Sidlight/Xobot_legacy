@@ -1,13 +1,12 @@
 package com.sidlight.xobot.messages.controllers.telegram;
 
-import com.sidlight.xobot.core.MessageExecutor;
-import com.sidlight.xobot.core.Messenger;
-import com.sidlight.xobot.core.TypeFile;
+import com.sidlight.xobot.core.message.MessageExecutor;
+import com.sidlight.xobot.core.message.Messenger;
+import com.sidlight.xobot.core.message.TypeFile;
 import com.sidlight.xobot.messages.controllers.BotController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.*;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.media.*;
@@ -44,7 +43,7 @@ public class TelegramMessageExecutor implements MessageExecutor {
     }
 
     @Override
-    public void sendText(String text, ArrayList<Map<String, String>> keyboards) {
+    public void sendText(String text, List<Map<String, String>> keyboards) {
         if (text.length() == 0) return;
         SendMessage sendMessage = new SendMessage();
         if (keyboards != null && !keyboards.isEmpty()) {
@@ -166,7 +165,7 @@ public class TelegramMessageExecutor implements MessageExecutor {
 
     }
 
-    private InlineKeyboardMarkup buildInlineKeyBoard(ArrayList<Map<String, String>> keyboards) {
+    private InlineKeyboardMarkup buildInlineKeyBoard(List<Map<String, String>> keyboards) {
         List<List<InlineKeyboardButton>> resultList = new ArrayList<>();
         for (Map<String, String> row : keyboards) {
             List<InlineKeyboardButton> rowResult = new ArrayList<>();

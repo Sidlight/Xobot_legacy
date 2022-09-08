@@ -1,11 +1,10 @@
-package com.sidlight.xobot.core;
+package com.sidlight.xobot.core.message;
 
 import com.sidlight.xobot.messages.ConfigurationBots;
 import com.sidlight.xobot.messages.controllers.BotController;
 import com.sidlight.xobot.messages.controllers.telegram.TelegramBotController;
 import com.sidlight.xobot.messages.controllers.telegram.TelegramMessageExecutor;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
 public enum Messenger {
     TELEGRAM(chatId -> new TelegramMessageExecutor(

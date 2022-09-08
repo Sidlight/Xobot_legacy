@@ -1,8 +1,8 @@
 package com.sidlight.xobot.core.statemachine;
 
-import com.sidlight.xobot.core.Message;
-import com.sidlight.xobot.core.UserActionException;
-import com.sidlight.xobot.core.UserIdentifier;
+import com.sidlight.xobot.core.command.UserActionException;
+import com.sidlight.xobot.core.message.Message;
+import com.sidlight.xobot.core.message.UserIdentifier;
 import com.sidlight.xobot.core.statemachine.annotations.ActionClass;
 import com.sidlight.xobot.core.statemachine.annotations.EventAction;
 import com.sidlight.xobot.core.statemachine.annotations.StateAction;
@@ -29,7 +29,7 @@ public class StateMachine {
 
     public static Object getObjectFromStage(UserIdentifier userIdentifier) throws StateMachineException {
         if (storage.containsKey(userIdentifier) && storage.get(userIdentifier) != null) {
-            Object obj = getObjectFromStage(userIdentifier);
+            Object obj = storage.get(userIdentifier);
             storage.remove(obj);
             return obj;
         }

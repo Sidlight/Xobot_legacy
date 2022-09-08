@@ -1,9 +1,9 @@
-package com.sidlight.xobot.core;
+package com.sidlight.xobot.core.message;
 
 import com.sidlight.xobot.messages.controllers.BotController;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public interface MessageExecutor {
@@ -12,7 +12,7 @@ public interface MessageExecutor {
 
     Messenger getMessenger();
 
-    void sendText(String text, ArrayList<Map<String, String>> keyboard);
+    void sendText(String text, List<Map<String, String>> keyboard);
 
     void sendFile(File file, TypeFile typeFile, String description);
 

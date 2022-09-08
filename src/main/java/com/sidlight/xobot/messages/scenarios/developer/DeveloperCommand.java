@@ -1,12 +1,15 @@
 package com.sidlight.xobot.messages.scenarios.developer;
 
-import com.sidlight.xobot.core.*;
-import com.sidlight.xobot.db.managers.UserManager;
+import com.sidlight.xobot.core.access.Role;
+import com.sidlight.xobot.core.command.BotCommands;
+import com.sidlight.xobot.core.command.Command;
+import com.sidlight.xobot.core.message.Message;
+import com.sidlight.xobot.core.message.Messenger;
 
 @BotCommands(description = "")
 public class DeveloperCommand {
 
-    @Command(name = "/getStateStatus", roles = {Role.DEVELOPER},messengers = Messenger.ALL)
+    @Command(command = "/getStateStatus", roles = {Role.DEVELOPER},messengers = Messenger.ALL)
     public void getStateStatus (Message message){
 
     }

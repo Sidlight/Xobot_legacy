@@ -6,15 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
+@Target( ElementType.METHOD)
 public @interface Command {
-
     String name();
-
-    Role[] roles();
-
-    Messenger[] messengers();
-
+    Role[] roles() default Role.ALL;
+    Messenger[] messengers() default Messenger.ALL;
     String description() default "";
 
     StateRegister stateRegister() default StateRegister.CONFIRMED;

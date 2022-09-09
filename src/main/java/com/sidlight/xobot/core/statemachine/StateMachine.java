@@ -117,11 +117,11 @@ public class StateMachine {
         }
         if (event.isEmpty()) throw new StateMachineException("Event not found", null);
         try {
+            String targetEvent = event.get().getAnnotation(EventAction.class).targetState();
+            states.put(message.getUserIdentifier(), targetEvent);
             event
                     .get()
                     .invoke(null, message);
-            String targetEvent = event.get().getAnnotation(EventAction.class).targetState();
-            states.put(message.getUserIdentifier(), targetEvent);
             logger.debug("Set state \"" + targetEvent + "\" from " + message.getUserIdentifier().toString());
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new StateMachineException("Error when changing State Machine state", e);

@@ -54,16 +54,31 @@ public class ModeratorCommand {
     @Command(command = "/confirmUser", roles = {Role.ADMIN, Role.MODERATOR, Role.DEVELOPER}, messengers = {Messenger.ALL})
     @Keyboard(tag = KeyboardTag.MODERATOR_KEYBOARD, text = "Потоковое подтверждение", row = 0, column = 2)
     public void confirmUser(Message message) throws StateMachineException {
-        StateMachine.executeEvent(message, Events.ModeratorEvents.START_CONFIRM_STREAM);
+        Object user = StateMachine.getObjectFromStage(message.getUserIdentifier());
+        if (user == null || !(user instanceof User)) {
+            throw new StateMachineException("Empty Data");
+        }
+        UserManager.get().setStateRegister(StateRegister.CONFIRMED, ((User) user).getUserIdentifier());
     }
 
-    @Command(command = CommandString.CANCEL_CONFIRM_USER, roles = {Role.ADMIN, Role.MODERATOR, Role.DEVELOPER}, messengers = {Messenger.ALL})
+    @Command(command = CommandString.CANCEL_USER, roles = {Role.ADMIN, Role.MODERATOR, Role.DEVELOPER}, messengers = {Messenger.ALL})
+    @Keyboard(tag = KeyboardTag.MODERATOR_KEYBOARD, text = "Заблокировать пользователя", row = 0, column = 2)
+    public void cancelUser(Message message) throws StateMachineException {
+        Object user = StateMachine.getObjectFromStage(message.getUserIdentifier());
+        if (user == null || !(user instanceof User)) {
+            throw new StateMachineException("Empty Data");
+        }
+        UserManager.get().setStateRegister(StateRegister.CONFIRMED, ((User) user).getUserIdentifier());
+    }
+
+    @Command(command = CommandString.STOP_CONFIRM_USER_STREAM, roles = {Role.ADMIN, Role.MODERATOR, Role.DEVELOPER}, messengers = {Messenger.ALL})
     @Keyboard(tag = KeyboardTag.MODERATOR_KEYBOARD, text = "П", row = 1, column = 0)
     public void cancelConfirmUser(Message message) throws StateMachineException {
-        StateMachine.executeEvent(message, Events.ModeratorEvents.START_CONFIRM_STREAM);
+        StateMachine.executeEvent(message, Events.ModeratorEvents.STOP_STREAM_CONFIRM);
     }
 
     public class CommandString {
-        public static final String CANCEL_CONFIRM_USER = "/cancel_confirm user";
+        public static final String STOP_CONFIRM_USER_STREAM = "/stop_confirm_user_stream";
+        public static final String CANCEL_USER = "/cancel_user";
     }
 }

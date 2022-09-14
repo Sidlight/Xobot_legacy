@@ -1,3 +1,4 @@
+/*
 package com.sidlight.xobot.messages.scenarios.moderator;
 
 import com.sidlight.xobot.core.access.StateRegister;
@@ -33,3 +34,4 @@ public class ModeratorEventAction {
         StateMachine.executeEvent(message, Events.ModeratorEvents.STOP_STREAM_CONFIRM);
     }
 }
+*/

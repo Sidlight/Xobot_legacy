@@ -27,6 +27,11 @@ public class StateMachine {
 
     private static final Map<UserIdentifier, Object> storage = new ConcurrentHashMap<>();
 
+    public static void cancel(Message message) {
+        states.remove(message.getUserIdentifier());
+        states.remove(message.getUserIdentifier());
+    }
+
     public static Object getObjectFromStage(UserIdentifier userIdentifier) throws StateMachineException {
         if (storage.containsKey(userIdentifier) && storage.get(userIdentifier) != null) {
             Object obj = storage.get(userIdentifier);

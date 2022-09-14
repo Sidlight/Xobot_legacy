@@ -1,3 +1,4 @@
+/*
 package com.sidlight.xobot.messages.scenarios.moderator;
 
 import com.sidlight.xobot.core.access.Role;
@@ -82,3 +83,4 @@ public class ModeratorCommand {
         public static final String CANCEL_USER = "/cancel_user";
     }
 }
+*/

@@ -15,8 +15,8 @@ public @interface Keyboard {
 
     String description() default "";
 
-    int row();
+    int row() default -1;
 
-    int column();
+    int column() default -1;
 
 }

@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 public class Message {
 
@@ -33,5 +34,12 @@ public class Message {
         return command;
     }
 
+    public void sendRequest(String text) {
+        userIdentifier.getMessageExecutor().sendText(text, null);
+    }
+
+    public void sendRequest(String text, List<Map<String, String>> keyboard) {
+        userIdentifier.getMessageExecutor().sendText(text, keyboard);
+    }
 
 }

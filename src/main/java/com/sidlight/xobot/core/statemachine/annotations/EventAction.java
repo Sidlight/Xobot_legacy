@@ -19,5 +19,5 @@ public @interface EventAction {
 
     String event();
 
-    long returnToOriginalState();
+    long returnToOriginalState() default 50000000;
 }

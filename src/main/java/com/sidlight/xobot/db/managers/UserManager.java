@@ -1,5 +1,6 @@
 package com.sidlight.xobot.db.managers;
 
+import com.sidlight.xobot.core.BotException;
 import com.sidlight.xobot.core.access.Role;
 import com.sidlight.xobot.core.access.StateRegister;
 import com.sidlight.xobot.core.message.Messenger;
@@ -50,6 +51,12 @@ public class UserManager implements InitializingBean {
         if (user == null) {
             throw new BotDataException("User not Found");
         }
+        return user;
+    }
+
+    public User getUserFromId(Long id) {
+        User user = userRepo.findFirstById(id);
+        if (user == null) throw new BotException("Пользователь не найден");
         return user;
     }
 

@@ -6,6 +6,7 @@ import com.sidlight.xobot.core.message.UserIdentifier;
 import com.sidlight.xobot.core.statemachine.annotations.ActionClass;
 import com.sidlight.xobot.core.statemachine.annotations.EventAction;
 import com.sidlight.xobot.core.statemachine.annotations.StateAction;
+import com.sidlight.xobot.core.statemachine.enums.BasicEvent;
 import com.sidlight.xobot.core.statemachine.enums.BasicState;
 import org.atteo.classindex.ClassIndex;
 import org.slf4j.Logger;
@@ -37,6 +38,13 @@ public class StateMachine {
             Object obj = storage.get(userIdentifier);
             storage.remove(obj);
             return obj;
+        }
+        throw new StateMachineException("Object from userIdentifier not found");
+    }
+
+    public static Object getObjectWithoutDelete(UserIdentifier userIdentifier) throws StateMachineException {
+        if (storage.containsKey(userIdentifier) && storage.get(userIdentifier) != null) {
+            return storage.get(userIdentifier);
         }
         throw new StateMachineException("Object from userIdentifier not found");
     }
@@ -79,6 +87,11 @@ public class StateMachine {
     }
 
     public static boolean executeEvent(Message message, String event) throws StateMachineException {
+        if (event == BasicEvent.END) {
+            states.remove(message.getUserIdentifier());
+            storage.remove(message.getUserIdentifier());
+            return true;
+        }
         acceptEvent(event, message);
         return true;
     }

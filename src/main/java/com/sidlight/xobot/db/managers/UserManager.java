@@ -117,4 +117,13 @@ public class UserManager implements InitializingBean {
         }
         userRepo.save(user);
     }
+
+    public void setNameFromUser(UserIdentifier userIdentifier, String fio) {
+        User user = userRepo.findFirstByChatIdAndMessenger(userIdentifier.chatId(), userIdentifier.messenger());
+        if (user == null) {
+            throw new BotDataException("Пользователь не найден");
+        }
+        user.setFio(fio);
+        userRepo.save(user);
+    }
 }

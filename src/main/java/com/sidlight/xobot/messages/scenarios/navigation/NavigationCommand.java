@@ -11,7 +11,7 @@ public class NavigationCommand {
     @Command(command = "/nav_menu")
     public static void navigationMenu(Message message) {
         message.getUserIdentifier().getMessageExecutor()
-                .sendText("Навигационное меню", KeyboardBuilder.buildKeyBoard(Keyboards.NAVIGATION, message));
+                .sendText("Навигационное меню", KeyboardBuilder.buildKeyboard(Keyboards.NAVIGATION, message));
     }
 
 

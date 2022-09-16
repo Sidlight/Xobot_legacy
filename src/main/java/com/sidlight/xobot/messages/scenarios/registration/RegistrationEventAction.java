@@ -34,7 +34,7 @@ public class RegistrationEventAction {
 
     @EventAction(targetState = RegistrationState.WAITING_CONFIRM_NAME_STATE, returnToOriginalState = 0L, event = RegistrationEvent.SET_NAME)
     public static void setStateWaitingName(Message message) {
-        message.getUserIdentifier().getMessageExecutor().sendText(RegistrationMessages.CONFIRM_NAME_MESSAGES, KeyboardBuilder.buildKeyBoard(KeyboardTag.CONFIRM_NAME_TAG, message));
+        message.getUserIdentifier().getMessageExecutor().sendText(RegistrationMessages.CONFIRM_NAME_MESSAGES, KeyboardBuilder.buildKeyboard(KeyboardTag.CONFIRM_NAME_TAG, message));
     }
 
     @EventAction(sourceState = RegistrationState.WAITING_CONFIRM_NAME_STATE, returnToOriginalState = 0L, event = RegistrationEvent.CONFIRM_NAME)

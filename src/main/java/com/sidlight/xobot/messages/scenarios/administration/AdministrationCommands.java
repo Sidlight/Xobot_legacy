@@ -15,7 +15,7 @@ public class AdministrationCommands {
     @Keyboard(tag = NavigationCommand.Keyboards.NAVIGATION, text = Text.ADMIN_MENU)
     @Command(command = Commands.ADMIN_MENU, roles = {Role.ADMIN, Role.USER, Role.DEVELOPER}, messengers = {Messenger.ALL})
     public static void sendAdministrationsMenu(Message message) {
-        message.sendRequest(Text.ADMIN_MENU, KeyboardBuilder.buildKeyBoard(Keyboards.ADMIN_MENU, message));
+        message.sendRequest(Text.ADMIN_MENU, KeyboardBuilder.buildKeyboard(Keyboards.ADMIN_MENU, message));
     }
 
     public class Text {

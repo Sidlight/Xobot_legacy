@@ -22,7 +22,7 @@ public class WorkInUserCommand {
     @Command(command = Commands.USER_WORK_MENU, roles = {Role.DEVELOPER, Role.ADMIN, Role.MODERATOR})
     @Keyboard(tag = AdministrationCommands.Keyboards.ADMIN_MENU, text = Text.USER_WORK)
     public static void sendUserWorkMenu(Message message) {
-        message.sendRequest(Text.USER_WORK, KeyboardBuilder.new_buildKeyboard(Keyboards.WORK_IN_USER, message));
+        message.sendRequest(Text.USER_WORK, KeyboardBuilder.buildKeyboard(Keyboards.WORK_IN_USER, message));
     }
 
 

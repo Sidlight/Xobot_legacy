@@ -11,7 +11,7 @@ import java.util.*;
 
 public class KeyboardBuilder {
 
-    public static List<Map<String, String>> new_buildKeyboard(String tag, Message message) {
+    public static List<Map<String, String>> buildKeyboard(String tag, Message message) {
         List<Button> buttons = new ArrayList<>();
         for (Class<?> klass : ClassIndex.getAnnotated(BotCommands.class)) {
             Arrays.stream(klass.getDeclaredMethods())
@@ -85,7 +85,7 @@ public class KeyboardBuilder {
         return keyboard;
     }
 
-    public static List<Map<String, String>> buildKeyBoard(String tag, Message message) {
+  /*  public static List<Map<String, String>> buildKeyBoard(String tag, Message message) {
         List<Button> buttons = new ArrayList<>();
         for (Class<?> klass : ClassIndex.getAnnotated(BotCommands.class)) {
             Arrays.stream(klass.getDeclaredMethods())
@@ -157,7 +157,7 @@ public class KeyboardBuilder {
         }
         return keyboard;
     }
-
+*/
     public static Map<String, String> getCommandMap() throws StateMachineException {
         List<Button> buttons = new ArrayList<>();
         for (Class<?> klass : ClassIndex.getAnnotated(BotCommands.class)) {

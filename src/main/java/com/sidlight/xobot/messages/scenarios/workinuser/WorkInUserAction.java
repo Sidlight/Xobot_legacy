@@ -26,7 +26,7 @@ public class WorkInUserAction {
             StateMachine.executeEvent(message, BasicEvent.CANCEL);
             throw new BotException("Некорректный ввод");
         }
-        message.sendRequest(stringBuilder.toString(), KeyboardBuilder.new_buildKeyboard(WorkInUserCommand.Keyboards.CONFIRM_FROM_ID, message));
+        message.sendRequest(stringBuilder.toString(), KeyboardBuilder.buildKeyboard(WorkInUserCommand.Keyboards.CONFIRM_FROM_ID, message));
     }
 
     @EventAction(sourceState = States.WAITING_SEND_USER_ID, event = Events.START_CONFIRM_USER_FROM_ID)

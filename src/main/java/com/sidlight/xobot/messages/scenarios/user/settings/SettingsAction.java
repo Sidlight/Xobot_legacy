@@ -1,4 +1,4 @@
-package com.sidlight.xobot.messages.scenarios.settings;
+package com.sidlight.xobot.messages.scenarios.user.settings;
 
 import com.sidlight.xobot.core.BotException;
 import com.sidlight.xobot.core.Core;

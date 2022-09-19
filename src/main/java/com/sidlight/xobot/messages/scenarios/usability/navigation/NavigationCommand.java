@@ -1,4 +1,4 @@
-package com.sidlight.xobot.messages.scenarios.navigation;
+package com.sidlight.xobot.messages.scenarios.usability.navigation;
 
 import com.sidlight.xobot.core.command.BotCommands;
 import com.sidlight.xobot.core.command.Command;

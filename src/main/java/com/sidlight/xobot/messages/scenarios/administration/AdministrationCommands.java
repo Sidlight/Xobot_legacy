@@ -7,7 +7,7 @@ import com.sidlight.xobot.core.command.Keyboard;
 import com.sidlight.xobot.core.command.KeyboardBuilder;
 import com.sidlight.xobot.core.message.Message;
 import com.sidlight.xobot.core.message.Messenger;
-import com.sidlight.xobot.messages.scenarios.navigation.NavigationCommand;
+import com.sidlight.xobot.messages.scenarios.usability.navigation.NavigationCommand;
 
 @BotCommands
 public class AdministrationCommands {

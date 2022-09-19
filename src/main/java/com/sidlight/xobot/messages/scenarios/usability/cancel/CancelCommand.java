@@ -1,4 +1,4 @@
-package com.sidlight.xobot.messages.scenarios.cancel;
+package com.sidlight.xobot.messages.scenarios.usability.cancel;
 
 import com.sidlight.xobot.core.access.Role;
 import com.sidlight.xobot.core.command.BotCommands;

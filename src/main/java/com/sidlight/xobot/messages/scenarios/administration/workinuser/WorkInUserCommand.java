@@ -1,4 +1,4 @@
-package com.sidlight.xobot.messages.scenarios.workinuser;
+package com.sidlight.xobot.messages.scenarios.administration.workinuser;
 
 import com.sidlight.xobot.core.access.Role;
 import com.sidlight.xobot.core.access.StateRegister;

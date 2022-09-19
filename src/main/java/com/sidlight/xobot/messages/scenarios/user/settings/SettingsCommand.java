@@ -1,4 +1,4 @@
-package com.sidlight.xobot.messages.scenarios.settings;
+package com.sidlight.xobot.messages.scenarios.user.settings;
 
 import com.sidlight.xobot.core.command.BotCommands;
 import com.sidlight.xobot.core.command.Command;
@@ -10,7 +10,7 @@ import com.sidlight.xobot.core.statemachine.StateMachine;
 import com.sidlight.xobot.core.statemachine.StateMachineException;
 import com.sidlight.xobot.core.statemachine.enums.BasicEvent;
 import com.sidlight.xobot.db.managers.UserManager;
-import com.sidlight.xobot.messages.scenarios.navigation.NavigationCommand;
+import com.sidlight.xobot.messages.scenarios.usability.navigation.NavigationCommand;
 
 @BotCommands
 public class SettingsCommand {
